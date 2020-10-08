@@ -20,7 +20,7 @@ export function humanizeTimestamp(
 ): string {
   // Following calculation is based on assumption that tDateTimeParser()
   // either returns momentjs or dayjs object.
-  const time = tDateTimeParser(timestamp).add(
+  const time = tDateTimeParser(timestamp.toString().slice(0, 24)).add(
     Dayjs(timestamp).utcOffset(),
     'minute',
   ); // parse time as UTC
