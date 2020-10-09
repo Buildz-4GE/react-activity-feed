@@ -219,6 +219,29 @@ export const textRenderer = (
   return text
     .split(' ')
     .map((word, i) => {
+      if (anchorme.validate.url(word) || anchorme.validate.email(word)) {
+        const link = anchorme(word, { list: true });
+        if (
+          link[0].protocol !== 'http://' &&
+          link[0].protocol !== 'https://' &&
+          link[0].protocol !== 'mailto:'
+        ) {
+          return word;
+        }
+        const url = link[0].protocol + link[0].encoded;
+        const urlText = _truncate(link[0].encoded, { length: 33 });
+        return (
+          <a
+            href={url}
+            className={`${parentClass}__link`}
+            target="blank"
+            rel="noopener"
+            key={`item-${i}`}
+          >
+            {urlText}
+          </a>
+        );
+      }
       if (onClickMention && word.includes('@')) {
         const mention = twitter.extractMentions(word);
         if (!mention.length) return word;
@@ -256,30 +279,6 @@ export const textRenderer = (
           </React.Fragment>
         );
       }
-      if (anchorme.validate.url(word) || anchorme.validate.email(word)) {
-        const link = anchorme(word, { list: true });
-        if (
-          link[0].protocol !== 'http://' &&
-          link[0].protocol !== 'https://' &&
-          link[0].protocol !== 'mailto:'
-        ) {
-          return word;
-        }
-        const url = link[0].protocol + link[0].encoded;
-        const urlText = _truncate(link[0].encoded, { length: 33 });
-        return (
-          <a
-            href={url}
-            className={`${parentClass}__link`}
-            target="blank"
-            rel="noopener"
-            key={`item-${i}`}
-          >
-            {urlText}
-          </a>
-        );
-      }
-
       return word;
     })
     .reduce((accu, elem) => (accu === null ? [elem] : [accu, ' ', elem]));
