@@ -51,6 +51,12 @@ export default class Video extends React.Component<Props> {
     }
     const url = sanitizeURL(video.secure_url || video.video);
 
+    // Convert Youtube links to embed
+    const ytwatch = /(?:youtube\.com|youtu\.be)\/(?:(?:watch\?v=)|(?:embed\/))/g;
+    const ytembed = `youtube.com/embed/`;
+    const newUrl = url.replace(ytwatch, ytembed);
+    video.secure_url = newUrl;
+
     if (video.type === 'text/html') {
       return (
         <div className="raf-video__frame">
@@ -61,7 +67,7 @@ export default class Video extends React.Component<Props> {
             type={video.type}
             width={video.width}
             height={video.height}
-            src={url}
+            src={newUrl}
             frameBorder="0"
           />
         </div>
