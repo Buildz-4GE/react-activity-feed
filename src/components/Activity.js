@@ -34,6 +34,8 @@ type Props = {
   onClickHashtag?: (word: string) => mixed,
   /** Handler for any routing you may do on clicks on Mentions */
   onClickMention?: (word: string) => mixed,
+  /** Handler for any routing you may do on clicks on Builds */
+  onClickBuild?: (word: string) => mixed,
 } & Streami18Ctx;
 
 /**
@@ -99,6 +101,7 @@ class Activity extends React.Component<Props> {
                 'raf-activity',
                 this.props.onClickMention,
                 this.props.onClickHashtag,
+                this.props.onClickBuild,
               )}
             </p>
           </div>

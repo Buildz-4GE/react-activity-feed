@@ -15,6 +15,7 @@ export type Props = {|
   onClickHashtag?: (word: string) => mixed,
   /** Handler for any routing you may do on clicks on Mentions */
   onClickMention?: (word: string) => mixed,
+  onClickBuild?: (word: string) => mixed,
 |} & Streami18Ctx;
 
 /**
@@ -72,6 +73,7 @@ class CommentItem extends React.Component<Props> {
                 'raf-comment-item',
                 this.props.onClickMention,
                 this.props.onClickHashtag,
+                this.props.onClickBuild,
               )}
             </p>
           </div>

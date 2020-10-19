@@ -214,6 +214,7 @@ export const textRenderer = (
   parentClass: string,
   onClickMention?: (word: string) => mixed,
   onClickHashtag?: (word: string) => mixed,
+  onClickBuild?: (word: string) => mixed,
 ) => {
   if (text === undefined) return;
   return text
@@ -276,6 +277,22 @@ export const textRenderer = (
             </a>
             {!word.endsWith(hashtag[0]) &&
               word.slice(word.indexOf(hashtag[0]) + hashtag[0].length)}
+          </React.Fragment>
+        );
+      } else if (onClickBuild && word.includes('+')) {
+        const build = [word];
+        if (!build.length) return word;
+
+        return (
+          <React.Fragment key={`item-${i}`}>
+            <a
+              onClick={() =>
+                onClickBuild && onClickBuild(build[0].substring(1))
+              }
+              className={`${parentClass}__hashtag`}
+            >
+              {build[0]}
+            </a>
           </React.Fragment>
         );
       }
