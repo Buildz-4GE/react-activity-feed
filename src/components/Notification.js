@@ -73,7 +73,7 @@ class Notification extends React.Component<Props> {
     const lastActor = userOrDefault(latestActivity.actor);
 
     if (typeof latestActivity.object === 'string') {
-      return null;
+      //return null;
     }
 
     if (activities.length === 1) {
@@ -103,6 +103,11 @@ class Notification extends React.Component<Props> {
               activityVerb: latestActivity.object.verb,
             },
           );
+          break;
+        case 'post':
+          headerText = t('{{ actorName }} mentioned you in a post.', {
+            actorName: lastActor.data.name,
+          });
           break;
         default:
           console.warn(
@@ -143,6 +148,14 @@ class Notification extends React.Component<Props> {
             },
           );
           break;
+        case 'post':
+          headerText = t(
+            '{{ actorName }} and 1 other mentioned you in a post.',
+            {
+              actorName: lastActor.data.name,
+            },
+          );
+          break;
         default:
           console.warn(
             'No notification styling found for your verb, please create your own custom Notification group.',
@@ -180,6 +193,14 @@ class Notification extends React.Component<Props> {
             {
               actorName: lastActor.data.name,
               activityVerb: latestActivity.object.verb,
+            },
+          );
+          break;
+        case 'post':
+          headerText = t(
+            '{{ actorName }} and {{ countOtherActors }} others mentioned you in a post.',
+            {
+              actorName: lastActor.data.name,
             },
           );
           break;
