@@ -212,9 +212,9 @@ export function sanitizeURL(url: ?string): ?string {
 export const textRenderer = (
   text: string,
   parentClass: string,
-  onClickMention?: (word: string) => mixed,
-  onClickHashtag?: (word: string) => mixed,
-  onClickBuild?: (word: string) => mixed,
+  linkMention?: (word: string) => mixed,
+  linkHashtag?: (word: string) => mixed,
+  linkBuild?: (word: string) => mixed,
 ) => {
   if (text === undefined) return;
   return text
@@ -243,7 +243,7 @@ export const textRenderer = (
           </a>
         );
       }
-      if (onClickMention && word.includes('@')) {
+      if (linkMention && word.includes('@')) {
         const mention = twitter.extractMentions(word);
         if (!mention.length) return word;
 
@@ -252,7 +252,7 @@ export const textRenderer = (
             {!word.startsWith(`@${mention[0]}`) &&
               word.slice(0, word.indexOf(mention[0]) - 1)}
             <a
-              onClick={() => onClickMention && onClickMention(mention[0])}
+              href={linkMention(mention[0])}
               className={`${parentClass}__mention`}
             >
               @{mention[0]}
@@ -261,7 +261,7 @@ export const textRenderer = (
               word.slice(word.indexOf(mention[0]) + mention[0].length)}
           </React.Fragment>
         );
-      } else if (onClickHashtag && word.includes('#')) {
+      } else if (linkHashtag && word.includes('#')) {
         const hashtag = twitter.extractHashtags(word);
         if (!hashtag.length) return word;
 
@@ -270,7 +270,7 @@ export const textRenderer = (
             {!word.startsWith(`#${hashtag[0]}`) &&
               word.slice(0, word.indexOf(hashtag[0]) - 1)}
             <a
-              onClick={() => onClickHashtag && onClickHashtag(hashtag[0])}
+              href={linkHashtag(hashtag[0])}
               className={`${parentClass}__hashtag`}
             >
               #{hashtag[0]}
@@ -279,17 +279,15 @@ export const textRenderer = (
               word.slice(word.indexOf(hashtag[0]) + hashtag[0].length)}
           </React.Fragment>
         );
-      } else if (onClickBuild && word.includes('+')) {
+      } else if (linkBuild && word.includes('+')) {
         const build = [word];
         if (!build.length) return word;
 
         return (
           <React.Fragment key={`item-${i}`}>
             <a
-              onClick={() =>
-                onClickBuild && onClickBuild(build[0].substring(1))
-              }
-              className={`${parentClass}__hashtag`}
+              href={linkBuild(build[0].slice(1))}
+              className={`${parentClass}__build`}
             >
               {build[0]}
             </a>

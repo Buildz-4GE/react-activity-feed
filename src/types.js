@@ -85,6 +85,7 @@ export type BaseUserResponse = StreamUserResponse<{}>;
 
 export type UserData = {
   name?: string,
+  handle?: string,
   profileImage?: string,
 };
 

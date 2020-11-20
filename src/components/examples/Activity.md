@@ -43,7 +43,6 @@ const activity = {
 };
 
 <Activity
-  onClickHashtag={(word) => console.log(`clicked on ${word}`)}
   activity={activity}
 />;
 ```

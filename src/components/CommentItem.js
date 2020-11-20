@@ -10,12 +10,12 @@ import type { Streami18Ctx } from '../Context';
 
 export type Props = {|
   comment: Comment,
-  onClickUser?: (?any) => mixed,
   /** Handler for any routing you may do on clicks on Hashtags */
-  onClickHashtag?: (word: string) => mixed,
+  linkHashtag?: (word: string) => mixed,
   /** Handler for any routing you may do on clicks on Mentions */
-  onClickMention?: (word: string) => mixed,
-  onClickBuild?: (word: string) => mixed,
+  linkMention?: (word: string) => mixed,
+  linkBuild?: (word: string) => mixed,
+  linkUser?: (word: string) => mixed,
 |} & Streami18Ctx;
 
 /**
@@ -29,29 +29,13 @@ class CommentItem extends React.Component<Props> {
     return user;
   };
 
-  onClickUser = () => {
-    const { onClickUser } = this.props;
-    if (onClickUser) {
-      return onClickUser(this._user());
-    }
-  };
-
-  _getOnClickUser() {
-    return this.props.onClickUser ? this.onClickUser : undefined;
-  }
-
   render() {
     const { comment, tDateTimeParser } = this.props;
     return (
       <div className="raf-comment-item">
         <Flex a="flex-start" style={{ padding: '8px 0' }}>
           {comment.user.data.profileImage && (
-            <Avatar
-              onClick={this._getOnClickUser()}
-              image={comment.user.data.profileImage}
-              circle
-              size={25}
-            />
+            <Avatar image={comment.user.data.profileImage} circle size={25} />
           )}
         </Flex>
         <Flex d="column" style={{ flex: 1, margin: '0 8px' }}>
@@ -62,18 +46,22 @@ class CommentItem extends React.Component<Props> {
               </small>
             </time>
             <p>
-              <span
-                onClick={this._getOnClickUser()}
+              <a
+                href={
+                  this.props.linkUser
+                    ? this.props.linkUser(comment.user.data.handle)
+                    : ''
+                }
                 className="raf-comment-item__author"
               >
                 {comment.user.data.name}
-              </span>{' '}
+              </a>{' '}
               {textRenderer(
                 comment.data.text,
                 'raf-comment-item',
-                this.props.onClickMention,
-                this.props.onClickHashtag,
-                this.props.onClickBuild,
+                this.props.linkMention,
+                this.props.linkHashtag,
+                this.props.linkBuild,
               )}
             </p>
           </div>
