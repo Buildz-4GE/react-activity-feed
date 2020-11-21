@@ -16,7 +16,7 @@ export type Props = {|
   time?: string, // text that should be displayed as the time
   timestamp?: string | number, // a timestamp that should be humanized
   icon?: string,
-  linkUser?: () => mixed,
+  linkUser?: (word: string) => mixed,
   follow?: boolean,
   Right?: Renderable,
   AfterUsername?: React.Node,
