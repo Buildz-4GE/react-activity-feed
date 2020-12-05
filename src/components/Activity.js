@@ -53,7 +53,9 @@ class Activity extends React.Component<Props> {
         <UserBar
           username={actor.data.name}
           avatar={actor.data.profileImage}
-          linkUser={this.props.linkUser(actor.data.handle)}
+          linkUser={
+            this.props.linkUser ? this.props.linkUser(actor.data.handle) : '#'
+          }
           subtitle={
             this.props.HeaderRight != null
               ? humanizeTimestamp(this.props.activity.time, tDateTimeParser)
