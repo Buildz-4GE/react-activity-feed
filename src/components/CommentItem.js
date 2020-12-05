@@ -50,7 +50,7 @@ class CommentItem extends React.Component<Props> {
                 href={
                   this.props.linkUser
                     ? this.props.linkUser(comment.user.data.handle)
-                    : ''
+                    : '#'
                 }
                 className="raf-comment-item__author"
               >

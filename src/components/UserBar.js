@@ -45,7 +45,10 @@ class UserBar extends React.Component<Props> {
           />
         ) : null}
         <div className="raf-user-bar__details">
-          <a className="raf-user-bar__username" href={this.props.linkUser}>
+          <a
+            className="raf-user-bar__username"
+            href={this.props.linkUser ? this.props.linkUser : '#'}
+          >
             {this.props.username}
           </a>
           {this.props.AfterUsername}
