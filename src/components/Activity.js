@@ -44,6 +44,31 @@ type Props = {
  * @example ./examples/Activity.md
  */
 class Activity extends React.Component<Props> {
+  constructor() {
+    super();
+    this.state = { data: [] };
+  }
+
+  async componentDidMount() {
+    const galleryImages = [];
+
+    if (
+      this.props.activity.attachments &&
+      this.props.activity.attachments.images &&
+      Boolean(this.props.activity.attachments.images.length)
+    ) {
+      for (const image of this.props.activity.attachments.images) {
+        await fetch(new Request(image, { method: 'HEAD', mode: 'no-cors' }))
+          .then(() => {
+            galleryImages.push(image);
+          })
+          .catch(() => {});
+      }
+    }
+
+    this.setState({ data: galleryImages });
+  }
+
   renderHeader = () => {
     const { tDateTimeParser } = this.props;
     const actor = userOrDefault(this.props.activity.actor);
@@ -135,9 +160,9 @@ class Activity extends React.Component<Props> {
           </div>
         ) : null}
 
-        {attachments.images && Boolean(attachments.images.length) && (
+        {this.state.data && Boolean(this.state.data.length) && (
           <div style={{ padding: '8px 0' }}>
-            <Gallery images={attachments.images} />
+            <Gallery images={this.state.data} />
           </div>
         )}
 
