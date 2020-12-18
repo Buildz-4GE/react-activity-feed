@@ -16,7 +16,7 @@ export type Props = {|
   time?: string, // text that should be displayed as the time
   timestamp?: string | number, // a timestamp that should be humanized
   icon?: string,
-  onClickUser?: () => mixed,
+  linkUser?: (word: string) => mixed,
   follow?: boolean,
   Right?: Renderable,
   AfterUsername?: React.Node,
@@ -45,12 +45,12 @@ class UserBar extends React.Component<Props> {
           />
         ) : null}
         <div className="raf-user-bar__details">
-          <p
+          <a
             className="raf-user-bar__username"
-            onClick={this.props.onClickUser}
+            href={this.props.linkUser ? this.props.linkUser : '#'}
           >
             {this.props.username}
-          </p>
+          </a>
           {this.props.AfterUsername}
           {this.props.icon !== undefined ? (
             <img src={this.props.icon} alt="icon" />

@@ -45,7 +45,7 @@ export default class ActivityFooter extends React.Component<Props> {
               activity={activity}
               onToggleReaction={onToggleReaction}
             />
-            <RepostButton {...this.props} />
+            <RepostButton {...this.props} onToggleReaction={onToggleReaction} />
           </Flex>
         </div>
       </div>

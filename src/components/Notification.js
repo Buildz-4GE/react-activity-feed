@@ -3,8 +3,6 @@ import React from 'react';
 import Avatar from './Avatar';
 import AvatarGroup from './AvatarGroup';
 import AttachedActivity from './AttachedActivity';
-import Dropdown from './Dropdown';
-import Link from './Link';
 
 import { humanizeTimestamp, userOrDefault } from '../utils';
 import type { UserResponse, BaseActivityGroupResponse } from '../types';
@@ -67,7 +65,7 @@ class Notification extends React.Component<Props> {
 
   render() {
     let headerText, headerSubtext;
-    const { activityGroup, onMarkAsRead, t, tDateTimeParser } = this.props;
+    const { activityGroup, t, tDateTimeParser } = this.props;
     const activities = activityGroup.activities;
     const latestActivity = activities[0];
     const lastActor = userOrDefault(latestActivity.actor);
@@ -228,20 +226,6 @@ class Notification extends React.Component<Props> {
         <div className="raf-notification__content">
           <div className="raf-notification__header">
             <strong>{headerText}</strong> {headerSubtext}
-            {!activityGroup.is_read && onMarkAsRead && (
-              <Dropdown>
-                <div>
-                  <Link
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onMarkAsRead(activityGroup);
-                    }}
-                  >
-                    Mark&nbsp;as&nbsp;read
-                  </Link>
-                </div>
-              </Dropdown>
-            )}
           </div>
           <div>
             <small>

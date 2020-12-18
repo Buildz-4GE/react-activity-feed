@@ -26,16 +26,16 @@ type Props = {
   Content?: Renderable,
   Footer?: Renderable,
   HeaderRight?: Renderable,
-  onClickUser?: (?any) => mixed,
   sub?: string,
   icon?: string,
   activity: ActivityData,
   /** Handler for any routing you may do on clicks on Hashtags */
-  onClickHashtag?: (word: string) => mixed,
+  linkHashtag?: (word: string) => mixed,
   /** Handler for any routing you may do on clicks on Mentions */
-  onClickMention?: (word: string) => mixed,
+  linkMention?: (word: string) => mixed,
   /** Handler for any routing you may do on clicks on Builds */
-  onClickBuild?: (word: string) => mixed,
+  linkBuild?: (word: string) => mixed,
+  linkUser?: (word: string) => mixed,
 } & Streami18Ctx;
 
 /**
@@ -44,10 +44,6 @@ type Props = {
  * @example ./examples/Activity.md
  */
 class Activity extends React.Component<Props> {
-  _getOnClickUser() {
-    return this.props.onClickUser ? this.onClickUser : undefined;
-  }
-
   renderHeader = () => {
     const { tDateTimeParser } = this.props;
     const actor = userOrDefault(this.props.activity.actor);
@@ -57,7 +53,9 @@ class Activity extends React.Component<Props> {
         <UserBar
           username={actor.data.name}
           avatar={actor.data.profileImage}
-          onClickUser={this._getOnClickUser()}
+          linkUser={
+            this.props.linkUser ? this.props.linkUser(actor.data.handle) : '#'
+          }
           subtitle={
             this.props.HeaderRight != null
               ? humanizeTimestamp(this.props.activity.time, tDateTimeParser)
@@ -69,13 +67,6 @@ class Activity extends React.Component<Props> {
         />
       </div>
     );
-  };
-
-  onClickUser = () => {
-    const { onClickUser } = this.props;
-    if (onClickUser) {
-      return onClickUser(userOrDefault(this.props.activity.actor));
-    }
   };
 
   renderContent = () => {
@@ -107,9 +98,9 @@ class Activity extends React.Component<Props> {
               {textRenderer(
                 text,
                 'raf-activity',
-                this.props.onClickMention,
-                this.props.onClickHashtag,
-                this.props.onClickBuild,
+                this.props.linkMention,
+                this.props.linkHashtag,
+                this.props.linkBuild,
               )}
             </p>
           </div>

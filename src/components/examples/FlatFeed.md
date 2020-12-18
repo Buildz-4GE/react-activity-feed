@@ -10,8 +10,6 @@
     Activity={(props) => (
       <Activity
         {...props}
-        onClickHashtag={(word) => console.log(`clicked on ${word}`)}
-        onClickMention={(word) => console.log(`clicked on ${word}`)}
       />
     )}
   />
@@ -31,8 +29,6 @@
     Activity={(props) => (
       <Activity
         {...props}
-        onClickHashtag={(word) => console.log(`clicked on ${word}`)}
-        onClickMention={(word) => console.log(`clicked on ${word}`)}
         Footer={() => (
           <React.Fragment>
             <ActivityFooter {...props} />

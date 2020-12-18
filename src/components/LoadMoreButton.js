@@ -23,7 +23,7 @@ class LoadMoreButton extends React.Component<Props> {
           disabled={this.props.refreshing}
           loading={this.props.refreshing}
         >
-          {this.props.children ? this.props.children : t('Load more')}
+          {this.props.children ? this.props.children : t('Load more comments')}
         </Button>
       </div>
     );
