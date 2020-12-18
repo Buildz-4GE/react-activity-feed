@@ -91,6 +91,14 @@ class Activity extends React.Component<Props> {
     text = text.trim();
     const { attachments = {} } = this.props.activity;
 
+    if (
+      attachments &&
+      attachments.og &&
+      Object.keys(attachments.og).length > 0
+    ) {
+      attachments.og.id = this.props.activity.id;
+    }
+
     return (
       <div className="raf-activity__content">
         {!!text && (
