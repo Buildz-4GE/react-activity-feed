@@ -639,6 +639,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                   value={this.state.text}
                   onChange={this._onChange}
                   trigger={this.props.trigger}
+                  rows={8}
                   onPaste={async (event) => {
                     const { items } = event.clipboardData;
                     if (!dataTransferItemsHaveFiles(items)) {
