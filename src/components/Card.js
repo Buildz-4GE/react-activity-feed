@@ -58,8 +58,6 @@ export default class Card extends React.Component<Props> {
     return (
       <a
         href={!nolink ? url : null}
-        target="blank"
-        rel="noopener"
         className={`raf-card ${
           image !== undefined ? 'raf-card--with-image' : ''
         }`}

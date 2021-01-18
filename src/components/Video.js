@@ -117,7 +117,7 @@ export default class Video extends React.Component<Props> {
               {this.props.og.description}
             </div>
             <div className="raf-video__video--link">
-              <a href={sanitizeURL(this.props.og.url)} target="blank">
+              <a href={sanitizeURL(this.props.og.url)}>
                 {this.props.og.site_name}
               </a>
             </div>
