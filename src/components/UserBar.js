@@ -53,7 +53,7 @@ class UserBar extends React.Component<Props> {
           </a>
           {this.props.AfterUsername}
           {this.props.icon !== undefined ? (
-            <img src={this.props.icon} alt="icon" />
+            <img src={this.props.icon} alt="icon" loading="lazy" />
           ) : null}
           {this.props.subtitle ? (
             <p className="raf-user-bar__subtitle">

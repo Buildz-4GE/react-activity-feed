@@ -68,7 +68,12 @@ export default class Gallery extends React.Component<Props, State> {
               onClick={() => this.openLightbox(i)}
               key={`image-${i}`}
             >
-              <img src={image} className={`raf-gallery__image `} alt="" />
+              <img
+                src={image}
+                className={`raf-gallery__image `}
+                alt=""
+                loading="lazy"
+              />
               <React.Fragment>
                 {i === 4 && images.length > 5 ? (
                   <p>{images.length - 4} more</p>

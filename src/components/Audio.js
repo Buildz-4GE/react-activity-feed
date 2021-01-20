@@ -113,7 +113,7 @@ export default class Audio extends React.Component<Props, State> {
                 </div>
               )}
             </div>
-            <img src={image} alt={`${og.description}`} />
+            <img src={image} alt={`${og.description}`} loading="lazy" />
           </div>
           <div className="raf-audio__content">
             <span className="raf-audio__content--title">

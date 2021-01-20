@@ -66,6 +66,7 @@ export default class Avatar extends React.PureComponent<Props> {
           onClick={this.props.onClick}
           src={image ? image : placeholder}
           alt={alt || ''}
+          loading="lazy"
         />
       </React.Fragment>
     );

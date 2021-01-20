@@ -23,6 +23,7 @@ const Icon = () => (
   <img
     src="https://lh3.googleusercontent.com/S0wT3WlK6_Y8nKy71NEhfC57nPbLxTZkjox02PArpgZReRZ0RHPZ7ms2f8pIgTrcSAWH"
     style={{ width: '30px', height: '30px' }}
+     loading="lazy"
   />
 );
 

@@ -124,6 +124,7 @@ export default class Card extends React.Component<Props> {
               }}
               src={image == null ? placeholder : image}
               alt={alt || this.props.title || this.props.description || ''}
+              loading="lazy"
             />
           </div>
         )}

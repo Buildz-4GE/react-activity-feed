@@ -90,7 +90,12 @@ class ReactionIcon extends React.Component<Props> {
     return (
       <div className="raf-reaction-icon" onClick={onPress}>
         {icon ? (
-          <img className="raf-reaction-icon__image" src={icon} alt="" />
+          <img
+            className="raf-reaction-icon__image"
+            src={icon}
+            alt=""
+            loading="lazy"
+          />
         ) : null}
         {count != null ? (
           <p className="raf-reaction-icon__label">{label}</p>
