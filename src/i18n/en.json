@@ -1,7 +1,4 @@
 {
-  "1 comment": "1 comment",
-  "1 like": "1 like",
-  "1 repost": "1 repost",
   "Details": "Details",
   "Load activities": "Load activities",
   "Load more comments": "Load more comments",
@@ -27,8 +24,5 @@
   "{{ actorName }} followed you": "{{ actorName }} followed you",
   "{{ actorName }} liked your {{ activityVerb }}": "{{ actorName }} liked your {{ activityVerb }}",
   "{{ actorName }} mentioned you in a post.": "{{ actorName }} mentioned you in a post.",
-  "{{ actorName }} reposted your {{ activityVerb }}": "{{ actorName }} reposted your {{ activityVerb }}",
-  "{{ countComments }} comments": "{{ countComments }} comments",
-  "{{ countLikes }} likes": "{{ countLikes }} likes",
-  "{{ countReposts }} reposts": "{{ countReposts }} reposts"
+  "{{ actorName }} reposted your {{ activityVerb }}": "{{ actorName }} reposted your {{ activityVerb }}"
 }

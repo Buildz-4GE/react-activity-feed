@@ -40,7 +40,6 @@ class ReactionIcon extends React.Component<Props> {
       labelPlural,
       onPress,
       icon,
-      t,
     } = this.props;
     let count = null;
     if (counts && kind) {
@@ -60,31 +59,6 @@ class ReactionIcon extends React.Component<Props> {
 
     if (labelSingle && labelPlural) {
       label = count === 1 ? `1 ${labelSingle}` : `${count} ${labelPlural}`;
-    }
-
-    if (!labelSingle || !labelPlural) {
-      switch (kind) {
-        case 'like':
-          label =
-            count === 1
-              ? t('1 like')
-              : t('{{ countLikes }} likes', { countLikes: count });
-          break;
-        case 'repost':
-          label =
-            count === 1
-              ? t('1 repost')
-              : t('{{ countReposts }} reposts', { countReposts: count });
-          break;
-        case 'comment':
-          label =
-            count === 1
-              ? t('1 comment')
-              : t('{{ countComments }} comments', { countComments: count });
-          break;
-        default:
-          break;
-      }
     }
 
     return (

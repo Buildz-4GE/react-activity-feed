@@ -1,7 +1,4 @@
 {
-  "1 comment": "",
-  "1 like": "",
-  "1 repost": "",
   "Details": "Voir les commentaires",
   "Load activities": "Voir les nouvelles publications",
   "Load more comments": "",
@@ -27,8 +24,5 @@
   "{{ actorName }} followed you": "",
   "{{ actorName }} liked your {{ activityVerb }}": "",
   "{{ actorName }} mentioned you in a post.": "",
-  "{{ actorName }} reposted your {{ activityVerb }}": "",
-  "{{ countComments }} comments": "",
-  "{{ countLikes }} likes": "",
-  "{{ countReposts }} reposts": ""
+  "{{ actorName }} reposted your {{ activityVerb }}": ""
 }
