@@ -69,8 +69,8 @@ export default class LikeButton extends React.Component<Props> {
         onPress={this._onPress}
         activeIcon={likebuttonActive}
         inactiveIcon={likebuttonInactive}
-        labelSingle="like"
-        labelPlural="likes"
+        labelSingle=""
+        labelPlural=""
       />
     );
   }
