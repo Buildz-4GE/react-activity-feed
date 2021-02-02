@@ -61,6 +61,10 @@ class ReactionIcon extends React.Component<Props> {
       label = count === 1 ? `1 ${labelSingle}` : `${count} ${labelPlural}`;
     }
 
+    if (!labelSingle || !labelPlural) {
+      label = count !== 0 ? count : '';
+    }
+
     return (
       <div className="raf-reaction-icon" onClick={onPress}>
         {icon ? (

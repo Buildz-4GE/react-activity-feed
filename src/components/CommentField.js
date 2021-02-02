@@ -87,7 +87,7 @@ class CommentField extends React.Component<Props, State> {
         ) : null}
         <div className="raf-comment-field__group">
           <Textarea
-            rows={1}
+            rows={3}
             value={this.state.text}
             placeholder={placeholder || t('Start Typing...')}
             onChange={this._onChange}
