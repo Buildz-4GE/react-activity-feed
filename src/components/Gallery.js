@@ -53,6 +53,27 @@ export default class Gallery extends React.Component<Props, State> {
       src: item,
     }));
 
+  getSmallUrls = (images: any) =>
+    images.map((url) => {
+      if (!(typeof url === 'string' || url instanceof String)) return '';
+
+      const urlNoVersion = url.replace(/\/v[0-9].*?\//gm, '/');
+
+      const prefixRegex = new RegExp('(.*/)(?:buildz_pro_public)', 'gi');
+      const prefixMatch = prefixRegex.exec(urlNoVersion);
+      let prefix = '';
+      if (prefixMatch) prefix = prefixMatch[1];
+      else return url;
+
+      const suffixRegex = new RegExp('/(buildz_pro_public/[^.]*)', 'gi');
+      const suffixMatch = suffixRegex.exec(urlNoVersion);
+      let suffix = '';
+      if (suffixMatch) suffix = suffixMatch[1];
+      else return url;
+
+      return prefix + 'f_auto,dpr_auto/c_limit,w_400/' + suffix;
+    });
+
   //  TODO: Provide way to add alt tags.
   render() {
     const { images } = this.props;
@@ -60,28 +81,30 @@ export default class Gallery extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <div className="raf-gallery">
-          {images.slice(0, 5).map((image, i) => (
-            <div
-              className={`img ${
-                i === 4 && images.length > 5 ? 'img--last' : ''
-              }`}
-              onClick={() => this.openLightbox(i)}
-              key={`image-${i}`}
-            >
-              <img
-                src={image}
-                className={`raf-gallery__image `}
-                alt=""
-                loading="lazy"
-              />
-              <React.Fragment>
-                {i === 4 && images.length > 5 ? (
-                  <p>{images.length - 4} more</p>
-                ) : null}
-              </React.Fragment>
-            </div>
-            // </div>
-          ))}
+          {this.getSmallUrls(images)
+            .slice(0, 5)
+            .map((image, i) => (
+              <div
+                className={`img ${
+                  i === 4 && images.length > 5 ? 'img--last' : ''
+                }`}
+                onClick={() => this.openLightbox(i)}
+                key={`image-${i}`}
+              >
+                <img
+                  src={image}
+                  className={`raf-gallery__image `}
+                  alt=""
+                  loading="lazy"
+                />
+                <React.Fragment>
+                  {i === 4 && images.length > 5 ? (
+                    <p>{images.length - 4} more</p>
+                  ) : null}
+                </React.Fragment>
+              </div>
+              // </div>
+            ))}
 
           <Lightbox
             backdropClosesModal
