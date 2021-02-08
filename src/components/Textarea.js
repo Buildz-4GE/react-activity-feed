@@ -82,6 +82,7 @@ export default class Textarea extends React.Component<Props> {
         onSelect={this.props.onChange}
         onPaste={this.props.onPaste}
         value={this.props.value}
+        minChar={0}
       />
     );
   }
