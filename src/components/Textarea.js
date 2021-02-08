@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import { LoadingIndicator } from 'react-file-utils';
 
-import { emojiIndex } from 'emoji-mart';
 import ReactTextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
 import type { Trigger, ReactRefObjectOrFunction } from '../types';
 
@@ -22,12 +21,6 @@ export type Props = {|
   trigger?: Trigger,
 |};
 
-const AutocompleteItem = ({ entity: { id, native } }) => (
-  <div>
-    {native} {id}
-  </div>
-);
-
 /**
  * Component is described here.
  *
@@ -45,21 +38,7 @@ export default class Textarea extends React.Component<Props> {
     return (
       <ReactTextareaAutocomplete
         loadingComponent={LoadingIndicator}
-        trigger={{
-          ':': {
-            dataProvider: (token) => {
-              const emojis = emojiIndex.search(token) || [];
-              return emojis.slice(0, 10);
-            },
-            component: AutocompleteItem,
-            output: (item) => ({
-              key: item.id,
-              text: item.native,
-              caretPosition: 'next',
-            }),
-          },
-          ...trigger,
-        }}
+        trigger={trigger}
         innerRef={
           innerRef &&
           ((el) => {
