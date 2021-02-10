@@ -256,6 +256,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     if (og && og.url != null) {
       this.setState((prevState) => {
         const { ogStateByUrl } = prevState;
+        delete ogStateByUrl[og.url];
         for (const url in ogStateByUrl) {
           ogStateByUrl[url].dismissed = true;
         }
@@ -718,7 +719,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                   )}
                 </div>
               )}
-              {availableOg && availableOg.length > 1 && (
+              {availableOg && availableOg.length > 0 && (
                 <React.Fragment>
                   <ol className="raf-status-update-form__url-list">
                     {availableOg.map(({ url, title }) => (
@@ -728,7 +729,8 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                             ? ' raf-status-update-form__url-list-item--active'
                             : ''
                         }`}
-                        onClick={() =>
+                        onClick={() => {
+                          console.log(availableOg);
                           this.setState((prevState) => {
                             const ogState = prevState.ogStateByUrl[url];
                             if (ogState) {
@@ -738,8 +740,8 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                               ogActiveUrl: url,
                               ogStateByUrl: prevState.ogStateByUrl,
                             };
-                          })
-                        }
+                          });
+                        }}
                         key={url}
                       >
                         <FontAwesomeIcon icon={faBookmark} />{' '}
