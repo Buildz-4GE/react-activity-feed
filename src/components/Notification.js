@@ -104,19 +104,17 @@ class Notification extends React.Component<Props> {
           break;
         case 'post':
           if (
-            latestActivity.post_users &&
-            latestActivity.post_users['build_owners'] &&
-            latestActivity.post_users['build_owners'].includes(
-              this.props.userId,
-            )
+            latestActivity.meta &&
+            latestActivity.meta['build_owners'] &&
+            latestActivity.meta['build_owners'].includes(this.props.userId)
           ) {
             headerText = t('{{ actorName }} made a post on your build.', {
               actorName: lastActor.data.name,
             });
           } else if (
-            latestActivity.post_users &&
-            latestActivity.post_users['garage_owner'] &&
-            latestActivity.post_users['garage_owner'] === this.props.userId
+            latestActivity.meta &&
+            latestActivity.meta['garage_owner'] &&
+            latestActivity.meta['garage_owner'] === this.props.userId
           ) {
             headerText = t('{{ actorName }} made a post on your garage.', {
               actorName: lastActor.data.name,
@@ -169,11 +167,9 @@ class Notification extends React.Component<Props> {
           break;
         case 'post':
           if (
-            latestActivity.post_users &&
-            latestActivity.post_users['build_owners'] &&
-            latestActivity.post_users['build_owners'].includes(
-              this.props.userId,
-            )
+            latestActivity.meta &&
+            latestActivity.meta['build_owners'] &&
+            latestActivity.meta['build_owners'].includes(this.props.userId)
           ) {
             headerText = t(
               '{{ actorName }} and 1 other made a post on your build.',
@@ -182,9 +178,9 @@ class Notification extends React.Component<Props> {
               },
             );
           } else if (
-            latestActivity.post_users &&
-            latestActivity.post_users['garage_owner'] &&
-            latestActivity.post_users['garage_owner'] === this.props.userId
+            latestActivity.meta &&
+            latestActivity.meta['garage_owner'] &&
+            latestActivity.meta['garage_owner'] === this.props.userId
           ) {
             headerText = t(
               '{{ actorName }} and 1 other made a post on your garage.',
@@ -243,11 +239,9 @@ class Notification extends React.Component<Props> {
           break;
         case 'post':
           if (
-            latestActivity.post_users &&
-            latestActivity.post_users['build_owners'] &&
-            latestActivity.post_users['build_owners'].includes(
-              this.props.userId,
-            )
+            latestActivity.meta &&
+            latestActivity.meta['build_owners'] &&
+            latestActivity.meta['build_owners'].includes(this.props.userId)
           ) {
             headerText = t(
               '{{ actorName }} and {{ countOtherActors }} others made a post on your build.',
@@ -256,9 +250,9 @@ class Notification extends React.Component<Props> {
               },
             );
           } else if (
-            latestActivity.post_users &&
-            latestActivity.post_users['garage_owner'] &&
-            latestActivity.post_users['garage_owner'] === this.props.userId
+            latestActivity.meta &&
+            latestActivity.meta['garage_owner'] &&
+            latestActivity.meta['garage_owner'] === this.props.userId
           ) {
             headerText = t(
               '{{ actorName }} and {{ countOtherActors }} others made a post on your garage.',
