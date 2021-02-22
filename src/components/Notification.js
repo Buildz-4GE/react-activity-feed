@@ -103,9 +103,28 @@ class Notification extends React.Component<Props> {
           );
           break;
         case 'post':
-          headerText = t('{{ actorName }} mentioned you in a post.', {
-            actorName: lastActor.data.name,
-          });
+          if (
+            latestActivity.meta &&
+            latestActivity.meta['build_owners'] &&
+            latestActivity.meta['build_owners'].includes(this.props.userId)
+          ) {
+            headerText = t('{{ actorName }} made a post on your build.', {
+              actorName: lastActor.data.name,
+            });
+          } else if (
+            latestActivity.meta &&
+            latestActivity.meta['garage_owner'] &&
+            latestActivity.meta['garage_owner'] === this.props.userId
+          ) {
+            headerText = t('{{ actorName }} made a post on your garage.', {
+              actorName: lastActor.data.name,
+            });
+          } else {
+            headerText = t('{{ actorName }} mentioned you in a post.', {
+              actorName: lastActor.data.name,
+            });
+          }
+
           break;
         default:
           console.warn(
@@ -147,12 +166,36 @@ class Notification extends React.Component<Props> {
           );
           break;
         case 'post':
-          headerText = t(
-            '{{ actorName }} and 1 other mentioned you in a post.',
-            {
-              actorName: lastActor.data.name,
-            },
-          );
+          if (
+            latestActivity.meta &&
+            latestActivity.meta['build_owners'] &&
+            latestActivity.meta['build_owners'].includes(this.props.userId)
+          ) {
+            headerText = t(
+              '{{ actorName }} and 1 other made a post on your build.',
+              {
+                actorName: lastActor.data.name,
+              },
+            );
+          } else if (
+            latestActivity.meta &&
+            latestActivity.meta['garage_owner'] &&
+            latestActivity.meta['garage_owner'] === this.props.userId
+          ) {
+            headerText = t(
+              '{{ actorName }} and 1 other made a post on your garage.',
+              {
+                actorName: lastActor.data.name,
+              },
+            );
+          } else {
+            headerText = t(
+              '{{ actorName }} and 1 other mentioned you in a post.',
+              {
+                actorName: lastActor.data.name,
+              },
+            );
+          }
           break;
         default:
           console.warn(
@@ -195,12 +238,36 @@ class Notification extends React.Component<Props> {
           );
           break;
         case 'post':
-          headerText = t(
-            '{{ actorName }} and {{ countOtherActors }} others mentioned you in a post.',
-            {
-              actorName: lastActor.data.name,
-            },
-          );
+          if (
+            latestActivity.meta &&
+            latestActivity.meta['build_owners'] &&
+            latestActivity.meta['build_owners'].includes(this.props.userId)
+          ) {
+            headerText = t(
+              '{{ actorName }} and {{ countOtherActors }} others made a post on your build.',
+              {
+                actorName: lastActor.data.name,
+              },
+            );
+          } else if (
+            latestActivity.meta &&
+            latestActivity.meta['garage_owner'] &&
+            latestActivity.meta['garage_owner'] === this.props.userId
+          ) {
+            headerText = t(
+              '{{ actorName }} and {{ countOtherActors }} others made a post on your garage.',
+              {
+                actorName: lastActor.data.name,
+              },
+            );
+          } else {
+            headerText = t(
+              '{{ actorName }} and {{ countOtherActors }} others mentioned you in a post.',
+              {
+                actorName: lastActor.data.name,
+              },
+            );
+          }
           break;
         default:
           console.warn(

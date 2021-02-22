@@ -105,11 +105,16 @@ class StatusUpdateForm extends React.Component<Props> {
 
   render() {
     const { t, Header } = this.props;
-    const HeaderComponent = Header ? Header : <Title>{t('New Post')}</Title>;
+    const HeaderComponent = Header ? (
+      Header
+    ) : (
+      <Title>{this.props.editActivity ? t('Edit Post') : t('New Post')}</Title>
+    );
     const forwardedProps = {
       ...this.props,
       Header: HeaderComponent,
     };
+
     return (
       <StreamApp.Consumer>
         {(appCtx) => <StatusUpdateFormInner {...forwardedProps} {...appCtx} />}
@@ -134,6 +139,7 @@ type State = {|
   ogStateByUrl: { [string]: OgState },
   ogActiveUrl: ?string,
   submitting: boolean,
+  existingImages: Array<string>,
 |};
 
 type PropsInner = {| ...Props, ...BaseAppCtx |};
@@ -161,6 +167,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     ogStateByUrl: {},
     ogActiveUrl: null,
     submitting: false,
+    existingImages: [],
   };
 
   constructor(props) {
@@ -168,6 +175,15 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     this._handleOgDebounced = _debounce(this.handleOG, 250, {
       leading: true,
       trailing: true,
+    });
+  }
+
+  componentDidMount() {
+    this.setState({
+      text: this.props.editActivity ? this.props.editActivity.object : '',
+      existingImages: this.props.editActivity
+        ? this.props.editActivity.attachments.images
+        : [],
     });
   }
 
@@ -352,6 +368,8 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     if (Object.keys(attachments).length > 0) {
       activity.attachments = attachments;
     }
+
+    activity.existingImages = this.state.existingImages;
 
     const modifiedActivity = this.props.modifyActivityData(activity);
     if (this.props.doRequest) {
@@ -607,11 +625,21 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     this._handleOgDebounced(text);
   };
 
+  deleteImage(inImage) {
+    const tempImages = this.state.existingImages.filter(
+      (image) => image !== inImage,
+    );
+
+    this.setState({ existingImages: tempImages });
+  }
+
   render() {
     const { t } = this.props;
     const activeOg = this._activeOg();
     const availableOg = this._availableOg();
     const userData = this.props.user.data || {};
+    const editActivity = this.props.editActivity;
+
     return (
       <Panel>
         <form onSubmit={this.onSubmitForm}>
@@ -750,6 +778,32 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                     ))}
                   </ol>
                 </React.Fragment>
+              )}
+              {editActivity && this.state.existingImages.length > 0 && (
+                <div className="flex flex-wrap">
+                  {this.state.existingImages.map((image, i) => (
+                    <div key={`image-${i}`} className="relative">
+                      <img
+                        src={image}
+                        className={`object-cover w-16 sm:w-24 h-16 mr-3 mb-3 rounded-sm`}
+                        alt=""
+                        loading="lazy"
+                      />
+                      <div
+                        className="absolute -top-2 -left-2 rounded-full bg-white shadow p-2 cursor-pointer"
+                        onClick={() => this.deleteImage(image)}
+                      >
+                        <svg
+                          className="h-3 w-3 text-gray-900 fill-current"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
+                        </svg>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
               {this.state.imageOrder.length > 0 && (
                 <ImagePreviewer

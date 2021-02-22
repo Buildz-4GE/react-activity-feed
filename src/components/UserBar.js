@@ -29,7 +29,7 @@ export type Props = {|
  */
 class UserBar extends React.Component<Props> {
   render() {
-    const { tDateTimeParser } = this.props;
+    const { tDateTimeParser, meta } = this.props;
     let time = this.props.time;
     if (time === undefined && this.props.timestamp != null) {
       time = humanizeTimestamp(this.props.timestamp, tDateTimeParser);
@@ -55,6 +55,27 @@ class UserBar extends React.Component<Props> {
           {this.props.icon !== undefined ? (
             <img src={this.props.icon} alt="icon" loading="lazy" />
           ) : null}
+          {meta && meta.garage_handle && (
+            <p className="text-sm">
+              {meta.build_handle && (
+                <span>
+                  <a
+                    className="text-orange-400"
+                    href={'/build/' + meta.build_handle}
+                  >
+                    +{meta.build_handle}
+                  </a>
+                  <span> by </span>
+                </span>
+              )}
+              <a
+                className="text-orange-400"
+                href={'/garage/' + meta.garage_handle}
+              >
+                @{meta.garage_handle}
+              </a>
+            </p>
+          )}
           {this.props.subtitle ? (
             <p className="raf-user-bar__subtitle">
               <time
