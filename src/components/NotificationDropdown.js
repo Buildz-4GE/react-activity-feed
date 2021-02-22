@@ -189,6 +189,7 @@ class NotificationDropdownInner extends React.Component<PropsInner, State> {
 
         <div
           ref={this.dropdownRef}
+          className={'raf-dropdown'}
           style={{
             position: 'absolute',
             left: this.props.right ? '' : '-22px',
