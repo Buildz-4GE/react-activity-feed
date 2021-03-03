@@ -113,7 +113,7 @@ class CommentItem extends React.Component<Props> {
     const { comment, tDateTimeParser, client } = this.props;
 
     return (
-      <div className="mt-3">
+      <div className="mt-3 ml-14">
         <div className="flex">
           <Avatar size={25} circle image={comment.user.data.profileImage} />
           <div className="ml-2">
