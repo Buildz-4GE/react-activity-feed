@@ -30,18 +30,38 @@ type Props = {|
  * @example ./examples/LikeButton.md
  */
 export default class LikeButton extends React.Component<Props> {
-  _onPress = () => {
+  _onPress = async () => {
     const {
       activity,
       reaction,
       onToggleReaction,
       onToggleChildReaction,
+      postLike,
     } = this.props;
 
+    let isLike = false;
+
     if (reaction && onToggleChildReaction) {
-      return onToggleChildReaction('like', reaction, {}, {});
+      isLike = !(
+        reaction.own_children &&
+        reaction.own_children['like'] &&
+        reaction.own_children['like'].length
+      );
+
+      await onToggleChildReaction('like', reaction, {}, {});
+    } else {
+      isLike = !(
+        activity.own_reactions &&
+        activity.own_reactions['like'] &&
+        activity.own_reactions['like'].length
+      );
+
+      await onToggleReaction('like', activity, {}, {});
     }
-    return onToggleReaction('like', activity, {}, {});
+
+    if (isLike) {
+      await postLike();
+    }
   };
 
   render() {

@@ -10,6 +10,7 @@ export type Props = {|
   /** The ID of the activity for which these comments are */
   activityId: string,
   /** The component that should render the comment */
+  reactionId: string,
   CommentItem: Renderable,
   /** By default pagination is done with a "Load more" button, you can use
    * InifiniteScrollPaginator to enable infinite scrolling */
@@ -40,19 +41,23 @@ export default class CommentList extends React.PureComponent<Props> {
 
   _Reaction = ({ reaction }: { reaction: Comment }) =>
     smartRender(this.props.CommentItem, { comment: reaction });
+
   render() {
     const {
       Paginator,
       activityId,
+      reactionId,
       activityPath,
       oldestToNewest,
       reverseOrder,
     } = this.props;
+
     return (
       <React.Fragment>
         <ReactionList
           Paginator={Paginator}
           activityId={activityId}
+          reactionId={reactionId}
           reactionKind={'comment'}
           Reaction={this._Reaction}
           activityPath={activityPath}

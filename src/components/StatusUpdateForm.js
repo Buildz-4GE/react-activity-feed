@@ -108,7 +108,15 @@ class StatusUpdateForm extends React.Component<Props> {
     const HeaderComponent = Header ? (
       Header
     ) : (
-      <Title>{this.props.editActivity ? t('Edit Post') : t('New Post')}</Title>
+      <Title>
+        {this.props.postAction === 'editPost'
+          ? t('Edit Post')
+          : this.props.postAction === 'newPostReaction'
+          ? t('New Comment')
+          : this.props.postAction === 'editPostReaction'
+          ? t('Edit Comment')
+          : t('New Post')}
+      </Title>
     );
     const forwardedProps = {
       ...this.props,
@@ -130,6 +138,7 @@ type OgState = {|
 |};
 
 type State = {|
+  editingId: string,
   text: string,
   imageUploads: { [string]: ImageUpload },
   imageOrder: Array<string>,
@@ -158,6 +167,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
   };
 
   state = {
+    editingId: null,
     text: '',
     imageUploads: {},
     imageOrder: [],
@@ -168,6 +178,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     ogActiveUrl: null,
     submitting: false,
     existingImages: [],
+    multipleMedia: true,
   };
 
   constructor(props) {
@@ -180,10 +191,26 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
 
   componentDidMount() {
     this.setState({
-      text: this.props.editActivity ? this.props.editActivity.object : '',
-      existingImages: this.props.editActivity
-        ? this.props.editActivity.attachments.images
+      editingId: this.props.editRecord ? this.props.editRecord.id : '',
+      text: this.props.editRecord
+        ? this.props.postAction === 'editPostReaction'
+          ? this.props.editRecord.data.object
+          : this.props.editRecord.object
+        : '',
+      existingImages: this.props.editRecord
+        ? this.props.postAction === 'editPostReaction'
+          ? this.props.editRecord.data.attachments
+            ? this.props.editRecord.data.attachments.images
+            : []
+          : this.props.editRecord.attachments
+          ? this.props.editRecord.attachments.images
+          : []
         : [],
+      multipleMedia:
+        this.props.postAction === 'editPostReaction' ||
+        this.props.postAction === 'newPostReaction'
+          ? false
+          : true,
     });
   }
 
@@ -370,8 +397,10 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     }
 
     activity.existingImages = this.state.existingImages;
+    activity.id = this.state.editingId;
 
     const modifiedActivity = this.props.modifyActivityData(activity);
+
     if (this.props.doRequest) {
       return await this.props.doRequest(modifiedActivity);
     } else {
@@ -638,7 +667,7 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
     const activeOg = this._activeOg();
     const availableOg = this._availableOg();
     const userData = this.props.user.data || {};
-    const editActivity = this.props.editActivity;
+    const editRecord = this.props.editRecord;
 
     return (
       <Panel>
@@ -664,7 +693,12 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                 </React.Fragment>
                 <Textarea
                   innerRef={this.textInputRef}
-                  placeholder={t('Type your post...')}
+                  placeholder={
+                    this.props.postAction === 'newPostReaction' ||
+                    this.props.postAction === 'editPostReaction'
+                      ? t('Type your comment...')
+                      : t('Type your post...')
+                  }
                   value={this.state.text}
                   onChange={this._onChange}
                   trigger={this.props.trigger}
@@ -779,8 +813,8 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                   </ol>
                 </React.Fragment>
               )}
-              {editActivity && this.state.existingImages.length > 0 && (
-                <div className="flex flex-wrap">
+              {editRecord && this.state.existingImages.length > 0 && (
+                <div className="flex flex-wrap mt-4">
                   {this.state.existingImages.map((image, i) => (
                     <div key={`image-${i}`} className="relative">
                       <img
@@ -813,6 +847,15 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                   handleRemove={this._removeImage}
                   handleRetry={this._uploadImage}
                   handleFiles={this._uploadNewFiles}
+                  multiple={this.state.multipleMedia}
+                  disabled={
+                    !this.state.multipleMedia &&
+                    !(
+                      this.state.existingImages.length === 0 &&
+                      this.state.imageOrder.length === 0 &&
+                      this.state.fileOrder.length === 0
+                    )
+                  }
                 />
               )}
               {this.state.fileOrder.length > 0 && (
@@ -823,24 +866,39 @@ class StatusUpdateFormInner extends React.Component<PropsInner, State> {
                   handleRemove={this._removeFile}
                   handleRetry={this._uploadFile}
                   handleFiles={this._uploadNewFiles}
+                  multiple={this.state.multipleMedia}
                 />
               )}
             </PanelContent>
             <PanelFooter>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ marginRight: '32px', display: 'inline-block' }}>
-                    <ImageUploadButton
-                      handleFiles={this._uploadNewFiles}
-                      multiple
-                    />
-                  </div>
-                  <div style={{ marginRight: '32px', display: 'inline-block' }}>
-                    <FileUploadButton
-                      handleFiles={this._uploadNewFiles}
-                      multiple
-                    />
-                  </div>
+                  {(this.state.multipleMedia ||
+                    (this.state.existingImages.length === 0 &&
+                      this.state.imageOrder.length === 0 &&
+                      this.state.fileOrder.length === 0)) && (
+                    <div
+                      style={{ marginRight: '32px', display: 'inline-block' }}
+                    >
+                      <ImageUploadButton
+                        handleFiles={this._uploadNewFiles}
+                        multiple={this.state.multipleMedia}
+                      />
+                    </div>
+                  )}
+                  {(this.state.multipleMedia ||
+                    (this.state.existingImages.length === 0 &&
+                      this.state.imageOrder.length === 0 &&
+                      this.state.fileOrder.length === 0)) && (
+                    <div
+                      style={{ marginRight: '32px', display: 'inline-block' }}
+                    >
+                      <FileUploadButton
+                        handleFiles={this._uploadNewFiles}
+                        multiple={this.state.multipleMedia}
+                      />
+                    </div>
+                  )}
                   <EmojiPicker onSelect={this._onSelectEmoji} />
                   {this.props.FooterItem}
                 </div>

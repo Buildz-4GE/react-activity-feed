@@ -402,6 +402,7 @@ export class FeedManager {
 
       return { activities };
     });
+    return childReaction;
   };
 
   onRemoveChildReaction = async (
@@ -1014,6 +1015,52 @@ export class FeedManager {
       return;
     }
 
+    const myResults = [];
+    const myIds = [];
+    let myFeed = null;
+
+    for (const aResult of response.results) {
+      if (aResult.meta && aResult.meta['original_id']) {
+        myFeed = this.props.client.feed('user', aResult.actor.id);
+
+        await myFeed
+          .get({
+            limit: 1,
+            id_gte: aResult.meta['original_id'],
+            enrich: false,
+            reactions: {
+              own: true,
+              counts: true,
+              recent: true,
+            },
+          })
+          .then((activitySuccess) => {
+            if (
+              activitySuccess &&
+              activitySuccess['results'] &&
+              activitySuccess['results'][0] &&
+              activitySuccess['results'][0].id ===
+                aResult.meta['original_id'] &&
+              !myIds.includes(activitySuccess['results'][0].id)
+            ) {
+              myIds.push(activitySuccess['results'][0].id);
+              myResults.push(activitySuccess['results'][0]);
+            }
+          })
+          .catch(() => {
+            if (!myIds.includes(aResult.id)) {
+              myIds.push(aResult.id);
+              //myResults.push(aResult);
+            }
+          });
+      } else if (!myIds.includes(aResult.id)) {
+        myIds.push(aResult.id);
+        myResults.push(aResult);
+      }
+    }
+
+    response.results = myResults;
+
     const newState = {
       activityOrder: response.results.map((a) => a.id),
       activities: this.responseToActivityMap(response),
@@ -1132,6 +1179,53 @@ export class FeedManager {
       });
       return;
     }
+
+    const myResults = [];
+    const myIds = [];
+    let myFeed = null;
+
+    for (const aResult of response.results) {
+      if (aResult.meta && aResult.meta['original_id']) {
+        myFeed = this.props.client.feed('user', aResult.actor.id);
+
+        await myFeed
+          .get({
+            limit: 1,
+            id_gte: aResult.meta['original_id'],
+            enrich: false,
+            reactions: {
+              own: true,
+              counts: true,
+              recent: true,
+            },
+          })
+          .then((activitySuccess) => {
+            if (
+              activitySuccess &&
+              activitySuccess['results'] &&
+              activitySuccess['results'][0] &&
+              activitySuccess['results'][0].id ===
+                aResult.meta['original_id'] &&
+              !myIds.includes(activitySuccess['results'][0].id)
+            ) {
+              myIds.push(activitySuccess['results'][0].id);
+              myResults.push(activitySuccess['results'][0]);
+            }
+          })
+          .catch(() => {
+            if (!myIds.includes(aResult.id)) {
+              myIds.push(aResult.id);
+              //myResults.push(aResult);
+            }
+          });
+      } else if (!myIds.includes(aResult.id)) {
+        myIds.push(aResult.id);
+        myResults.push(aResult);
+      }
+    }
+
+    response.results = myResults;
+
     return this.setState((prevState) => {
       const activities = prevState.activities.merge(
         this.responseToActivityMap(response),
@@ -1230,12 +1324,14 @@ export class FeedManager {
 
   loadNextReactions = async (
     activityId: string,
+    reactionId: string,
     kind: string,
     activityPath?: ?Array<string>,
     oldestToNewest?: boolean,
   ) => {
     let options: ReactionFilterOptions = {
       activity_id: activityId,
+      reaction_id: reactionId,
       kind,
     };
 

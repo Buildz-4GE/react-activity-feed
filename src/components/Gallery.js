@@ -80,7 +80,9 @@ export default class Gallery extends React.Component<Props, State> {
 
     return (
       <React.Fragment>
-        <div className="raf-gallery">
+        <div
+          className={`raf-gallery ${this.props.thumbs ? 'gallery-thumbs' : ''}`}
+        >
           {this.getSmallUrls(images)
             .slice(0, 5)
             .map((image, i) => (
@@ -93,7 +95,7 @@ export default class Gallery extends React.Component<Props, State> {
               >
                 <img
                   src={image}
-                  className={`raf-gallery__image `}
+                  className={`raf-gallery__image`}
                   alt=""
                   loading="lazy"
                 />

@@ -127,6 +127,7 @@ class FlatFeed extends React.Component<Props> {
 type PropsInner = {| ...Props, ...BaseFeedCtx |};
 class FlatFeedInner extends React.Component<PropsInner> {
   listRef = React.createRef();
+
   _refresh = async () => {
     await this.props.refresh(this.props.options);
     const ref = this.listRef;
@@ -134,8 +135,16 @@ class FlatFeedInner extends React.Component<PropsInner> {
       ref.current.scrollToOffset({ offset: 0 });
     }
   };
+
   async componentDidMount() {
     await this._refresh();
+  }
+
+  async componentDidUpdate() {
+    if (this.props.forceFeedRefresh) {
+      await this.props.feedRefreshed();
+      await this._refresh();
+    }
   }
 
   _renderWrappedActivity = ({ item }: { item: any }) => (
@@ -158,6 +167,7 @@ class FlatFeedInner extends React.Component<PropsInner> {
     onRemoveActivity: this.props.onRemoveActivity,
     feedGroup: this.props.feedGroup,
     userId: this.props.userId,
+    refresh: this._refresh,
   });
 
   _renderActivity = (item: ActivityResponse<Object, Object>) => {

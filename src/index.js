@@ -93,6 +93,7 @@ export { default as CommentField } from './components/CommentField';
 // Generic components
 export { default as Button } from './components/Button';
 export { default as DataLabel } from './components/DataLabel';
+export { default as Flex } from './components/Flex';
 
 // StatusUpdateForm sub components
 export { default as Textarea } from './components/Textarea';
@@ -102,6 +103,10 @@ export { default as Panel } from './components/Panel';
 export { default as PanelHeading } from './components/PanelHeader';
 export { default as PanelFooter } from './components/PanelFooter';
 export { default as PanelContent } from './components/PanelContent';
+
+// Buildz custom
+export { default as ConfirmBox } from './components/ConfirmBox';
+export { default as AlertBox } from './components/AlertBox';
 
 export { Streami18n } from './Streami18n';
 export * from './i18n/index.js';

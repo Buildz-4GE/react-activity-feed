@@ -49,7 +49,7 @@ class Activity extends React.Component<Props> {
     this.state = { data: [] };
   }
 
-  async componentDidMount() {
+  updateGallery = async () => {
     const galleryImages = [];
 
     if (
@@ -66,7 +66,12 @@ class Activity extends React.Component<Props> {
       }
     }
 
+    this.setState({ data: [] });
     this.setState({ data: galleryImages });
+  };
+
+  componentDidMount() {
+    this.updateGallery();
   }
 
   renderHeader = () => {
@@ -152,7 +157,11 @@ class Activity extends React.Component<Props> {
 
         {Boolean(this.props.activity.image) &&
         this.props.activity.image !== undefined ? (
-          <div style={{ padding: '8px 0' }}>
+          <div
+            style={{
+              padding: this.props.fromModal ? '8px 16px' : '8px 0',
+            }}
+          >
             <Gallery
               images={[this.props.activity.image]}
               // resizeMethod="resize"
@@ -161,7 +170,7 @@ class Activity extends React.Component<Props> {
         ) : null}
 
         {this.state.data && Boolean(this.state.data.length) && (
-          <div style={{ padding: '8px 0' }}>
+          <div style={{ padding: this.props.fromModal ? '8px 16px' : '8px 0' }}>
             <Gallery images={this.state.data} />
           </div>
         )}

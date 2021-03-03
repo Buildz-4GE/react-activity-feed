@@ -46,6 +46,8 @@ export default class SinglePost extends React.Component<Props> {
     return (
       <React.Fragment>
         <FlatFeed
+          forceFeedRefresh={this.props.forceFeedRefresh}
+          feedRefreshed={this.props.feedRefreshed}
           feedGroup={this.props.feedGroup}
           userId={this.props.userId}
           options={{

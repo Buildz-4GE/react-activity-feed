@@ -137,6 +137,11 @@ class NotificationDropdownInner extends React.Component<PropsInner, State> {
     await this.props.refresh(makeDefaultOptions(this.props.options));
   };
 
+  openActivityModal = (activity) => {
+    this.closeDropdown();
+    this.props.openActivityModal(activity);
+  };
+
   openDropdown = () => {
     this.setState(
       {
@@ -209,8 +214,10 @@ class NotificationDropdownInner extends React.Component<PropsInner, State> {
               right={this.props.right}
               Header={this.props.Header}
               Footer={this.props.Footer}
+              openActivityModal={this.openActivityModal}
             >
               <NotificationFeed
+                openActivityModal={this.props.openActivityModal}
                 feedGroup={this.props.feedGroup}
                 userId={this.props.userId}
                 options={this.props.options}

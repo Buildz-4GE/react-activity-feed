@@ -11,6 +11,7 @@ type Props = {|
   activityId: string,
   /** The reaction kind that you want to display in this list, e.g `like` or
    * `comment` */
+  reactionId: string,
   reactionKind: string,
   /** The component that should render the reaction */
   Reaction: Renderable,
@@ -49,17 +50,22 @@ class ReactionListInner extends React.Component<PropsInner> {
   componentDidMount() {
     const {
       activityId,
+      reactionId,
       activities,
       reactionKind,
       getActivityPath,
       oldestToNewest,
     } = this.props;
+
+    let orderPrefix = 'oldest';
+
     if (!oldestToNewest) {
-      return;
+      orderPrefix = 'latest';
     }
 
-    const activityPath = this.props.activityPath || getActivityPath(activityId);
-    const orderPrefix = 'oldest';
+    const activityPath =
+      this.props.activityPath ||
+      getActivityPath(reactionId ? reactionId : activityId);
     const reactions_extra = activities.getIn([
       ...activityPath,
       orderPrefix + '_reactions_extra',
@@ -69,6 +75,7 @@ class ReactionListInner extends React.Component<PropsInner> {
     }
     return this.props.loadNextReactions(
       activityId,
+      reactionId,
       reactionKind,
       activityPath,
       oldestToNewest,
@@ -78,13 +85,16 @@ class ReactionListInner extends React.Component<PropsInner> {
   render() {
     const {
       activityId,
+      reactionId,
       activities,
       reactionKind,
       getActivityPath,
       oldestToNewest,
       reverseOrder,
     } = this.props;
-    const activityPath = this.props.activityPath || getActivityPath(activityId);
+    const activityPath =
+      this.props.activityPath ||
+      getActivityPath(reactionId ? reactionId : activityId);
     let orderPrefix = 'latest';
     if (oldestToNewest) {
       orderPrefix = 'oldest';
@@ -121,6 +131,7 @@ class ReactionListInner extends React.Component<PropsInner> {
       loadNextPage: () =>
         this.props.loadNextReactions(
           activityId,
+          reactionId,
           reactionKind,
           activityPath,
           oldestToNewest,

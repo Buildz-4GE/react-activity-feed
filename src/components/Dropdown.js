@@ -54,25 +54,38 @@ export default class Dropdown extends React.Component<Props, State> {
 
   render() {
     return (
-      <div className="raf-dropdown">
-        <IconButton onClick={this.showMenu}>
-          <svg
-            className="raf-dropdown__button"
-            width="12"
-            height="8"
-            viewBox="0 0 12 8"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.41 0L6 4.77 10.59 0 12 1.469l-6 6.25-6-6.25z"
-              fill="#A0B2B8"
-              fillRule="evenodd"
-            />
-          </svg>
-        </IconButton>
+      <div
+        className="raf-dropdown"
+        style={{
+          position: this.props.more ? 'relative' : 'absolute',
+          top: this.props.more ? '0' : '8px',
+          left: this.props.more ? '0' : null,
+        }}
+      >
+        {!this.props.more ? (
+          <IconButton onClick={this.showMenu}>
+            <svg
+              className="raf-dropdown__button"
+              width="12"
+              height="8"
+              viewBox="0 0 12 8"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.41 0L6 4.77 10.59 0 12 1.469l-6 6.25-6-6.25z"
+                fill="#A0B2B8"
+                fillRule="evenodd"
+              />
+            </svg>
+          </IconButton>
+        ) : (
+          <div className="cursor-pointer" onClick={this.showMenu}>
+            More
+          </div>
+        )}
 
         {this.state.open && (
-          <div className="raf-dropdown__box" ref={this.dropdownBox}>
+          <div className="raf-dropdown__box text-base" ref={this.dropdownBox}>
             {this.props.children}
           </div>
         )}

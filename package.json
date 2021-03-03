@@ -144,6 +144,7 @@
     "react-dropzone": "^5.1.1",
     "react-file-utils": "^0.3.8",
     "react-images": "^0.5.19",
+    "scroll-into-view-if-needed": "^2.2.27",
     "stream-analytics": "^2.7.2",
     "twitter-text": "^3.0.0",
     "url-loader": "^3.1.2",
