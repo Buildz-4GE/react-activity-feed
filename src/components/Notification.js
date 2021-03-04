@@ -3,6 +3,8 @@ import React from 'react';
 import Avatar from './Avatar';
 import AvatarGroup from './AvatarGroup';
 import AttachedActivity from './AttachedActivity';
+import Dropdown from './Dropdown';
+import Link from './Link';
 
 import { humanizeTimestamp, userOrDefault } from '../utils';
 import type { UserResponse, BaseActivityGroupResponse } from '../types';
@@ -40,6 +42,11 @@ class Notification extends React.Component<Props> {
       ? (e: SyntheticEvent<>) => this.onClickUser(e, actor)
       : undefined;
   }
+
+  suspendNotifies = (e, latestActivity) => {
+    e.stopPropagation();
+    this.props.noNotifies(latestActivity.id);
+  };
 
   onClickUser = (e: SyntheticEvent<>, actor: any) => {
     const { onClickUser } = this.props;
@@ -450,7 +457,7 @@ class Notification extends React.Component<Props> {
       <div
         onClick={this._getOnClickNotification()}
         className={
-          'raf-notification' +
+          'raf-notification relative' +
           (activityGroup.is_read ? ' raf-notification--read' : '')
         }
       >
@@ -482,6 +489,20 @@ class Notification extends React.Component<Props> {
             />
           ) : null}
         </div>
+        {(latestActivity.verb === 'comment' ||
+          latestActivity.verb === 'reaction') && (
+          <Dropdown>
+            <div>
+              <Link
+                onClick={(e) => {
+                  this.suspendNotifies(e, latestActivity);
+                }}
+              >
+                Suspend notifications
+              </Link>
+            </div>
+          </Dropdown>
+        )}
       </div>
     );
   }

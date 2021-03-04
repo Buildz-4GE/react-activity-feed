@@ -88,6 +88,7 @@ export default class NotificationFeed extends React.Component<Props> {
     return (
       <Feed
         openActivityModal={this.props.openActivityModal}
+        noNotifies={this.props.noNotifies}
         feedGroup={this.props.feedGroup}
         userId={this.props.userId}
         options={makeDefaultOptions(this.props.options)}
@@ -141,6 +142,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
       feedGroup={this.props.feedGroup}
       userId={this.props.userId}
       openActivityModal={this.props.openActivityModal}
+      noNotifies={this.props.noNotifies}
       key={item.get('id')}
     />
   );
@@ -148,6 +150,7 @@ class NotificationFeedInner extends React.Component<PropsInner> {
   _renderGroup = (item: BaseActivityResponse) => {
     const args = {
       openActivityModal: this.props.openActivityModal,
+      noNotifies: this.props.noNotifies,
       activityGroup: item,
       feedGroup: this.props.feedGroup,
       userId: this.props.userId,

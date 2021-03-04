@@ -216,9 +216,11 @@ class NotificationDropdownInner extends React.Component<PropsInner, State> {
               Header={this.props.Header}
               Footer={this.props.Footer}
               openActivityModal={this.openActivityModal}
+              noNotifies={this.props.noNotifies}
             >
               <NotificationFeed
                 openActivityModal={this.props.openActivityModal}
+                noNotifies={this.props.noNotifies}
                 feedGroup={this.props.feedGroup}
                 userId={this.props.userId}
                 options={this.props.options}
