@@ -17,6 +17,8 @@ import { humanizeTimestamp, textRenderer } from '../utils';
 import { withTranslationContext } from '../Context';
 import type { Streami18Ctx } from '../Context';
 
+import scrollIntoView from 'scroll-into-view-if-needed';
+
 export type Props = {|
   comment: Comment,
   activity: BaseActivityResponse,
@@ -37,6 +39,8 @@ export type Props = {|
  * @example ./examples/CommentItem.md
  */
 class CommentItem extends React.Component<Props> {
+  commentItemRef = React.createRef();
+
   constructor(props: Props) {
     super(props);
 
@@ -44,11 +48,27 @@ class CommentItem extends React.Component<Props> {
       confirmDeleteOpen: false,
       editComment: false,
       commentText: '',
+      isFocusedComment: false,
     };
   }
 
   componentDidMount() {
     this.setState({ commentText: this.props.comment.data.text });
+
+    const isFocused =
+      this.props.showCommentId &&
+      this.props.showCommentId === this.props.comment.id;
+
+    this.setState({ isFocusedComment: isFocused });
+
+    if (isFocused) {
+      scrollIntoView(this.commentItemRef.current, {
+        behavior: 'smooth',
+        scrollMode: 'if-needed',
+        block: 'center',
+        inline: 'center',
+      });
+    }
   }
 
   _user = () => {
@@ -113,8 +133,12 @@ class CommentItem extends React.Component<Props> {
     const { comment, tDateTimeParser, client } = this.props;
 
     return (
-      <div className="mt-3 ml-14">
-        <div className="flex">
+      <div ref={this.commentItemRef} className="mt-3 ml-11">
+        <div
+          className={`flex ${
+            this.state.isFocusedComment ? '-mt-2 -ml-2 p-2 bg-gray-100' : ''
+          }`}
+        >
           <Avatar size={25} circle image={comment.user.data.profileImage} />
           <div className="ml-2">
             <div>
