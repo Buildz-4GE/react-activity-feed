@@ -134,6 +134,14 @@ class Notification extends React.Component<Props> {
           headerText = t('{{ actorName }} replied to your comment.', {
             actorName: lastActor.data.name,
           });
+        } else if (latestActivity.meta['activity_owner_label']) {
+          headerText = t(
+            '{{ actorName }} replied to a comment on {{ ownerLabel }} post.',
+            {
+              actorName: lastActor.data.name,
+              ownerLabel: latestActivity.meta['activity_owner_label'],
+            },
+          );
         } else {
           headerText = t('{{ actorName }} replied to a comment.', {
             actorName: lastActor.data.name,
@@ -150,6 +158,14 @@ class Notification extends React.Component<Props> {
           headerText = t('{{ actorName }} commented on your post.', {
             actorName: lastActor.data.name,
           });
+        } else if (latestActivity.meta['activity_owner_label']) {
+          headerText = t(
+            '{{ actorName }} also commented on {{ ownerLabel }} post.',
+            {
+              actorName: lastActor.data.name,
+              ownerLabel: latestActivity.meta['activity_owner_label'],
+            },
+          );
         } else {
           headerText = t('{{ actorName }} commented on a post.', {
             actorName: lastActor.data.name,
@@ -215,6 +231,14 @@ class Notification extends React.Component<Props> {
               actorName: lastActor.data.name,
             },
           );
+        } else if (latestActivity.meta['activity_owner_label']) {
+          headerText = t(
+            '{{ actorName }} and 1 other replied to a comment on {{ ownerLabel }} post.',
+            {
+              actorName: lastActor.data.name,
+              ownerLabel: latestActivity.meta['activity_owner_label'],
+            },
+          );
         } else {
           headerText = t('{{ actorName }} and 1 other replied to a comment.', {
             actorName: lastActor.data.name,
@@ -232,6 +256,14 @@ class Notification extends React.Component<Props> {
             '{{ actorName }} and 1 other commented on your post.',
             {
               actorName: lastActor.data.name,
+            },
+          );
+        } else if (latestActivity.meta['activity_owner_label']) {
+          headerText = t(
+            '{{ actorName }} and 1 other also commented on {{ ownerLabel }} post.',
+            {
+              actorName: lastActor.data.name,
+              ownerLabel: latestActivity.meta['activity_owner_label'],
             },
           );
         } else {
@@ -346,6 +378,15 @@ class Notification extends React.Component<Props> {
               countOtherActors,
             },
           );
+        } else if (latestActivity.meta['activity_owner_label']) {
+          headerText = t(
+            '{{ actorName }} and {{ countOtherActors }} others replied to a comment on {{ ownerLabel }} post.',
+            {
+              actorName: lastActor.data.name,
+              ownerLabel: latestActivity.meta['activity_owner_label'],
+              countOtherActors,
+            },
+          );
         } else {
           headerText = t(
             '{{ actorName }} and {{ countOtherActors }} others replied to a comment.',
@@ -367,6 +408,15 @@ class Notification extends React.Component<Props> {
             '{{ actorName }} and {{ countOtherActors }} others commented on your post.',
             {
               actorName: lastActor.data.name,
+              countOtherActors,
+            },
+          );
+        } else if (latestActivity.meta['activity_owner_label']) {
+          headerText = t(
+            '{{ actorName }} and {{ countOtherActors }} others also commented on {{ ownerLabel }} post.',
+            {
+              actorName: lastActor.data.name,
+              ownerLabel: latestActivity.meta['activity_owner_label'],
               countOtherActors,
             },
           );
