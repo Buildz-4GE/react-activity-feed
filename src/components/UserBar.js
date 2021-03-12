@@ -55,24 +55,24 @@ class UserBar extends React.Component<Props> {
           {this.props.icon !== undefined ? (
             <img src={this.props.icon} alt="icon" loading="lazy" />
           ) : null}
-          {meta && meta.garage_handle && (
+          {meta && meta.garage && meta.garage.data && meta.garage.data.handle && (
             <p className="text-sm">
-              {meta.build_handle && (
+              {meta.build && meta.build.data && meta.build.data.handle && (
                 <span>
                   <a
                     className="text-orange-400"
-                    href={'/build/' + meta.build_handle}
+                    href={'/build/' + meta.build.data.handle}
                   >
-                    +{meta.build_handle}
+                    +{meta.build.data.handle}
                   </a>
                   <span> by </span>
                 </span>
               )}
               <a
                 className="text-orange-400"
-                href={'/garage/' + meta.garage_handle}
+                href={'/garage/' + meta.garage.data.handle}
               >
-                @{meta.garage_handle}
+                @{meta.garage.data.handle}
               </a>
             </p>
           )}
