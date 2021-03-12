@@ -158,6 +158,14 @@ class Notification extends React.Component<Props> {
           headerText = t('{{ actorName }} commented on your post.', {
             actorName: lastActor.data.name,
           });
+        } else if (
+          latestActivity.meta &&
+          latestActivity.meta['users'] &&
+          latestActivity.meta['users'].includes(this.props.userId)
+        ) {
+          headerText = t('{{ actorName }} mentioned you in a comment.', {
+            actorName: lastActor.data.name,
+          });
         } else if (latestActivity.meta['activity_owner_label']) {
           headerText = t(
             '{{ actorName }} also commented on {{ ownerLabel }} post.',
@@ -254,6 +262,17 @@ class Notification extends React.Component<Props> {
         ) {
           headerText = t(
             '{{ actorName }} and 1 other commented on your post.',
+            {
+              actorName: lastActor.data.name,
+            },
+          );
+        } else if (
+          latestActivity.meta &&
+          latestActivity.meta['users'] &&
+          latestActivity.meta['users'].includes(this.props.userId)
+        ) {
+          headerText = t(
+            '{{ actorName }} and 1 other mentioned you in a post.',
             {
               actorName: lastActor.data.name,
             },
@@ -406,6 +425,18 @@ class Notification extends React.Component<Props> {
         ) {
           headerText = t(
             '{{ actorName }} and {{ countOtherActors }} others commented on your post.',
+            {
+              actorName: lastActor.data.name,
+              countOtherActors,
+            },
+          );
+        } else if (
+          latestActivity.meta &&
+          latestActivity.meta['users'] &&
+          latestActivity.meta['users'].includes(this.props.userId)
+        ) {
+          headerText = t(
+            '{{ actorName }} and {{ countOtherActors }} others mentioned you in a post.',
             {
               actorName: lastActor.data.name,
               countOtherActors,

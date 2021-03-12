@@ -52,6 +52,7 @@
   "{{ actorName }} liked your {{ activityVerb }}": "{{ actorName }} liked your {{ activityVerb }}",
   "{{ actorName }} made a post on your build.": "{{ actorName }} made a post on your build.",
   "{{ actorName }} made a post on your garage.": "{{ actorName }} made a post on your garage.",
+  "{{ actorName }} mentioned you in a comment.": "{{ actorName }} mentioned you in a comment.",
   "{{ actorName }} mentioned you in a post.": "{{ actorName }} mentioned you in a post.",
   "{{ actorName }} replied to a comment on {{ ownerLabel }} post.": "{{ actorName }} replied to a comment on {{ ownerLabel }} post.",
   "{{ actorName }} replied to a comment.": "{{ actorName }} replied to a comment.",
