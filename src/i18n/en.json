@@ -19,7 +19,6 @@
   "{{ actorName }} and 1 other also commented on {{ ownerLabel }} post.": "{{ actorName }} and 1 other also commented on {{ ownerLabel }} post.",
   "{{ actorName }} and 1 other commented on a post.": "{{ actorName }} and 1 other commented on a post.",
   "{{ actorName }} and 1 other commented on your post.": "{{ actorName }} and 1 other commented on your post.",
-  "{{ actorName }} and 1 other followed you": "{{ actorName }} and 1 other followed you",
   "{{ actorName }} and 1 other liked your comment": "{{ actorName }} and 1 other liked your comment",
   "{{ actorName }} and 1 other liked your post": "{{ actorName }} and 1 other liked your post",
   "{{ actorName }} and 1 other liked your {{ activityVerb }}": "{{ actorName }} and 1 other liked your {{ activityVerb }}",
@@ -30,10 +29,10 @@
   "{{ actorName }} and 1 other replied to a comment.": "{{ actorName }} and 1 other replied to a comment.",
   "{{ actorName }} and 1 other replied to your comment.": "{{ actorName }} and 1 other replied to your comment.",
   "{{ actorName }} and 1 other reposted your {{ activityVerb }}": "{{ actorName }} and 1 other reposted your {{ activityVerb }}",
+  "{{ actorName }} and 1 other started following you": "{{ actorName }} and 1 other started following you",
   "{{ actorName }} and {{ countOtherActors }} others also commented on {{ ownerLabel }} post.": "{{ actorName }} and {{ countOtherActors }} others also commented on {{ ownerLabel }} post.",
   "{{ actorName }} and {{ countOtherActors }} others commented on a post.": "{{ actorName }} and {{ countOtherActors }} others commented on a post.",
   "{{ actorName }} and {{ countOtherActors }} others commented on your post.": "{{ actorName }} and {{ countOtherActors }} others commented on your post.",
-  "{{ actorName }} and {{ countOtherActors }} others followed you": "{{ actorName }} and {{ countOtherActors }} others followed you",
   "{{ actorName }} and {{ countOtherActors }} others liked your comment": "{{ actorName }} and {{ countOtherActors }} others liked your comment",
   "{{ actorName }} and {{ countOtherActors }} others liked your post": "{{ actorName }} and {{ countOtherActors }} others liked your post",
   "{{ actorName }} and {{ countOtherActors }} others liked your {{ activityVerb }}": "{{ actorName }} and {{ countOtherActors }} others liked your {{ activityVerb }}",
@@ -44,9 +43,9 @@
   "{{ actorName }} and {{ countOtherActors }} others replied to a comment.": "{{ actorName }} and {{ countOtherActors }} others replied to a comment.",
   "{{ actorName }} and {{ countOtherActors }} others replied to your comment.": "{{ actorName }} and {{ countOtherActors }} others replied to your comment.",
   "{{ actorName }} and {{ countOtherActors }} others reposted your {{ activityVerb }}": "{{ actorName }} and {{ countOtherActors }} others reposted your {{ activityVerb }}",
+  "{{ actorName }} and {{ countOtherActors }} others started following you": "{{ actorName }} and {{ countOtherActors }} others started following you",
   "{{ actorName }} commented on a post.": "{{ actorName }} commented on a post.",
   "{{ actorName }} commented on your post.": "{{ actorName }} commented on your post.",
-  "{{ actorName }} followed you": "{{ actorName }} followed you",
   "{{ actorName }} liked your comment": "{{ actorName }} liked your comment",
   "{{ actorName }} liked your post": "{{ actorName }} liked your post",
   "{{ actorName }} liked your {{ activityVerb }}": "{{ actorName }} liked your {{ activityVerb }}",
@@ -57,5 +56,6 @@
   "{{ actorName }} replied to a comment on {{ ownerLabel }} post.": "{{ actorName }} replied to a comment on {{ ownerLabel }} post.",
   "{{ actorName }} replied to a comment.": "{{ actorName }} replied to a comment.",
   "{{ actorName }} replied to your comment.": "{{ actorName }} replied to your comment.",
-  "{{ actorName }} reposted your {{ activityVerb }}": "{{ actorName }} reposted your {{ activityVerb }}"
+  "{{ actorName }} reposted your {{ activityVerb }}": "{{ actorName }} reposted your {{ activityVerb }}",
+  "{{ actorName }} started following you": "{{ actorName }} started following you"
 }

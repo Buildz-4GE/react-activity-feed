@@ -97,7 +97,7 @@ class Notification extends React.Component<Props> {
         });
         break;
       case 'follow':
-        headerText = t('{{ actorName }} followed you', {
+        headerText = t('{{ actorName }} started following you', {
           actorName: lastActor.data.name,
         });
         break;
@@ -223,7 +223,7 @@ class Notification extends React.Component<Props> {
         );
         break;
       case 'follow':
-        headerText = t('{{ actorName }} and 1 other followed you', {
+        headerText = t('{{ actorName }} and 1 other started following you', {
           actorName: lastActor.data.name,
         });
         break;
@@ -377,7 +377,7 @@ class Notification extends React.Component<Props> {
         break;
       case 'follow':
         headerText = t(
-          '{{ actorName }} and {{ countOtherActors }} others followed you',
+          '{{ actorName }} and {{ countOtherActors }} others started following you',
           {
             actorName: lastActor.data.name,
             countOtherActors,
