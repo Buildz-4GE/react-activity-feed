@@ -106,6 +106,8 @@ class FlatFeed extends React.Component<Props> {
       <Feed
         feedGroup={this.props.feedGroup}
         userId={this.props.userId}
+        showActivity={this.props.showActivity}
+        limitLines={this.props.limitLines}
         options={this.props.options}
         notify={this.props.notify}
         doFeedRequest={this.props.doFeedRequest}
@@ -153,6 +155,8 @@ class FlatFeedInner extends React.Component<PropsInner> {
       item={item}
       feedGroup={this.props.feedGroup}
       userId={this.props.userId}
+      showActivity={this.props.showActivity}
+      limitLines={this.props.limitLines}
       key={item.get('id')}
     />
   );
@@ -167,6 +171,8 @@ class FlatFeedInner extends React.Component<PropsInner> {
     onRemoveActivity: this.props.onRemoveActivity,
     feedGroup: this.props.feedGroup,
     userId: this.props.userId,
+    showActivity: this.props.showActivity,
+    limitLines: this.props.limitLines,
     refresh: this._refresh,
   });
 

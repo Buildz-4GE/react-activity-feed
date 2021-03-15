@@ -8,6 +8,7 @@ import Audio from './Audio';
 import Video from './Video';
 import { FileIcon } from 'react-file-utils';
 import Gallery from './Gallery';
+import ShowMoreText from 'react-show-more-text';
 
 import type { ActivityData, Renderable } from '../types';
 import type { Streami18Ctx } from '../Context';
@@ -74,6 +75,12 @@ class Activity extends React.Component<Props> {
     this.updateGallery();
   }
 
+  onShowMoreClick = () => {
+    if (this.props.showActivity) {
+      this.props.showActivity(this.props.activity);
+    }
+  };
+
   renderHeader = () => {
     const { tDateTimeParser } = this.props;
     const actor = userOrDefault(this.props.activity.actor);
@@ -124,7 +131,16 @@ class Activity extends React.Component<Props> {
       <div className="raf-activity__content">
         {!!text && (
           <div style={{ padding: '8px 16px' }}>
-            <p>
+            <ShowMoreText
+              /* Default options */
+              lines={this.props.limitLines}
+              more="See more"
+              less="See less"
+              anchorClass="raf-activity__mention"
+              onClick={this.onShowMoreClick}
+              expanded={false}
+              width={0}
+            >
               {textRenderer(
                 text,
                 'raf-activity',
@@ -132,7 +148,7 @@ class Activity extends React.Component<Props> {
                 this.props.linkHashtag,
                 this.props.linkBuild,
               )}
-            </p>
+            </ShowMoreText>
           </div>
         )}
 

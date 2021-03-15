@@ -48,6 +48,7 @@ export default class SinglePost extends React.Component<Props> {
         <FlatFeed
           forceFeedRefresh={this.props.forceFeedRefresh}
           feedRefreshed={this.props.feedRefreshed}
+          limitLines={this.props.limitLines}
           feedGroup={this.props.feedGroup}
           userId={this.props.userId}
           options={{
